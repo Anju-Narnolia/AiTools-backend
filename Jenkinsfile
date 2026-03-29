@@ -23,7 +23,7 @@ pipeline {
                     sh 'docker stop ${APP_NAME} || true'
                     sh 'docker rm ${APP_NAME} || true'
                     // Run new container on port 5000
-                    sh 'docker run -d -p 5000:5000 --name ${APP_NAME} ${APP_NAME}:latest'
+                    sh 'docker run -d -p 5000:5000 --network my-network --name ${APP_NAME} ${APP_NAME}:latest'
                 }
             }
         }
