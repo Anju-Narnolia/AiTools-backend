@@ -1,14 +1,20 @@
-FROM python:3.9-slim
+# Base image
+FROM node:lts-alpine
 
+# Set working directory
 WORKDIR /app
 
-# Copy requirements first for better caching
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy package.json and package-lock.json first (for caching)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
 
 # Copy the rest of the app
 COPY . .
 
+# Expose port (your Express server runs on 5000)
 EXPOSE 5000
 
-CMD ["python", "app.py"] 
+# Start the app
+CMD ["npm","run", "dev"]
